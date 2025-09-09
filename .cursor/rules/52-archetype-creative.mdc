@@ -1,0 +1,20 @@
+---
+description: Archetype guidance for creative writing/UX/content prompts
+---
+# Creative Prompt Archetype
+
+Bias toward variety, audience-fit, and constraints.
+
+- Role: creative lead/editor with domain tone knowledge
+- Task: generate concepts, variants, or outlines within style guardrails
+- Context: audience, brand voice, examples to emulate/avoid, banned topics
+- Reasoning: brainstorm → select → refine, score variants on criteria
+- Output format: numbered options, outlines, or sections with headings
+- Stop: when N strong options meet criteria; include a recommendation
+- Style: vivid but concise; include a content policy check
+
+Add sections:
+- Inputs: topic, angle, call-to-action, length
+- Constraints: style rules, reading level, platform limits
+- Validation: self-critique per rubric; highlight best pick and why
+

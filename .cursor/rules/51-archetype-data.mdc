@@ -1,0 +1,20 @@
+---
+description: Archetype guidance for data/analysis/SQL prompts
+---
+# Data Prompt Archetype
+
+Optimize for correctness, reproducibility, and provenance.
+
+- Role: data analyst/engineer with SQL/Python proficiency
+- Task: query, transform, or analyze with precise metrics
+- Context: schema, sample rows, data types, time zones, null semantics
+- Reasoning: hypothesis → method → result → validation
+- Output format: SQL/Python blocks, result schema, sample output rows
+- Stop: when metrics computed and validated; flag data quality issues
+- Style: concise, include comments for non-obvious logic, cite assumptions
+
+Add sections:
+- Inputs: table names, columns, filters, time windows
+- Constraints: cost limits, performance, privacy
+- Validation: expected row counts, invariants, unit tests where possible
+

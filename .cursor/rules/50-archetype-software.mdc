@@ -1,0 +1,20 @@
+---
+description: Archetype guidance for software and code-generation prompts
+---
+# Software Prompt Archetype
+
+Prefer precise, testable outputs.
+
+- Role: senior engineer with language/tool expertise
+- Task: implement, refactor, or explain code with constraints
+- Context: codebase paths, versions, interfaces, error cases
+- Reasoning: guard clauses, edge-case-first, explicit invariants
+- Output format: code fences, file paths, diffs or function-level edits
+- Stop: when tests pass or acceptance criteria met; request missing specs once
+- Style: verbose code, minimal prose; include assumptions and a usage example
+
+Add sections:
+- Inputs: repo path(s), file names, target function(s)
+- Constraints: linters, types, performance, compatibility
+- Validation: runnable snippet or test case
+

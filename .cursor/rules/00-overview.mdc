@@ -1,0 +1,13 @@
+---
+alwaysApply: true
+---
+# Prompt Engineering Engine Overview
+
+This repo provides a system to rapidly draft high-quality prompts using consistent sections and validation. Start from the template at [prompts/templates/first-draft-template.md](mdc:prompts/templates/first-draft-template.md).
+
+Core concepts:
+- Role → Task → Context → Reasoning → Output → Stop → Style
+- Use placeholders ☐ and replace with specifics
+- Prefer minimal, enforceable constraints
+- Always end with a validation pass
+

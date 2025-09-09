@@ -1,0 +1,16 @@
+---
+description: Prompt template structure and required sections
+---
+# Required Sections for Prompts
+
+Every prompt should include these sections in this order:
+- Role
+- Task
+- Context
+- Reasoning
+- Output format
+- Stop conditions
+- Deliverable style
+
+Reference the starter at [prompts/templates/first-draft-template.md](mdc:prompts/templates/first-draft-template.md) and adapt as needed.
+

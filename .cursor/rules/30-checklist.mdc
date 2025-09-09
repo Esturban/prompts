@@ -1,0 +1,16 @@
+---
+description: Quality checklist for prompt drafts
+---
+# Prompt Quality Checklist
+
+Use this before finalizing any prompt:
+- Clear single primary goal
+- Inputs and constraints enumerated
+- Output schema explicit and testable
+- Stop conditions defined
+- Reasoning approach specified
+- Edge cases and risks considered
+- Example run included
+- Tone and formatting specified
+- Placeholders minimized; unresolved ones marked [TODO]
+

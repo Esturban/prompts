@@ -1,0 +1,14 @@
+---
+alwaysApply: true
+---
+# Prompt Drafting Workflow
+
+1) Plan the prompt before writing:
+   - Define a single primary objective
+   - Identify stakeholders, inputs, constraints, success criteria
+2) Draft using the template sections in order
+3) Add constraints to reduce ambiguity (formats, lengths, enumerations)
+4) Add stop conditions and escalation rules for missing info
+5) Validate with the checklist and a concrete test example
+6) Refine: remove fluff, keep only enforceable instructions
+

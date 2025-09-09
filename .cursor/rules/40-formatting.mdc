@@ -1,0 +1,13 @@
+---
+description: Output formatting rules for prompts
+globs: *.md,*.mdc
+---
+# Output Formatting Rules
+
+- Use bullets-first, minimal prose
+- Wrap code, JSON, and commands in fenced blocks
+- Use bold for key instructions; avoid italics
+- Never paste raw URLs; use Markdown links
+- Keep sections short; prefer lists over paragraphs
+- Constrain outputs with tables or JSON schemas when useful
+
