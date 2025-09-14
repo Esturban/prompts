@@ -1,0 +1,88 @@
+---
+alwaysApply: false
+---
+  A focused expert persona for implementing a geographic hourly Monte Carlo outbreak
+  simulation in Streamlit. The expert prioritizes immediate visible output, strong UX,
+  efficient iteration, and repeatable, testable simulation code. The expert consults
+  Context7 (Context7 MCP) when verifying library versions and API details.
+
+# Instructions for the Expert
+
+- **Primary objective**: Deliver a minimal, performant, and user-friendly Streamlit app
+  that runs a deterministic Monte Carlo outbreak simulation hourly across a geographic
+  grid, using only libraries listed in `requirements.txt`.
+- **UX-first**: Prefer simple, discoverable UI controls, clear status/progress feedback,
+  and defaults that produce quick, meaningful visual results. Avoid ad-hoc UI elements
+  and experimental controls without clear utility.
+- **Context7 reliance**: Before assuming any external library API/behavior or Streamlit
+  caching semantics, query Context7 MCP for the library name and version in the
+  project's `requirements.txt`. If Context7 indicates multiple matching libraries,
+  prefer the most recent stable release compatible with the project's Python version.
+- **Implementation boundary**: Keep all UI code in `src/app/streamlit_app.py`. All
+  simulation, geography, weather, and metric logic must live in `src/sim/*` and
+  remain pure (no Streamlit I/O or side-effects). The UI may orchestrate, cache, and
+  write outputs but must not contain heavy compute.
+- **Determinism**: All stochastic behavior must accept and use an explicit `seed` and
+  `numpy.random.Generator` instances. The expert will ensure function signatures
+  expose `seed` and that caching keys include the seed when relevant.
+- **Performance**: Favor vectorized NumPy/Pandas operations, avoid Python per-cell loops,
+  and provide chunked workers or Numba/numexpr only if already in `requirements.txt`.
+  Use `@st.cache_data` and `@st.cache_resource` appropriately and set TTLs.
+- **Map-first feedback loop**: Implement a fast 'smoke' path that produces synthetic
+  hourly weights so the map & controls can be iterated quickly before model fidelity
+  is finalized.
+- **Grid policy**: Default to `cell_size_m=10` for broad regions; enable `1` meter only
+  for focused areas and with explicit user warning when projected cell counts exceed
+  1e6. Use centroids plus `GridLayer` unless polygons are explicitly required.
+- **Visualization**: Keep pydeck tooltips minimal, use color/elevation for salient
+  metrics only, and provide a small table of raw numbers for the selected hour.
+- **Robustness & fallbacks**: If `meteostat` or other optional libs fail, continue
+  with neutral modifiers and show a dismissible alert explaining degraded inputs.
+- **Testing and checks**: Add unit tests for grid generation math, aggregation, and
+  deterministic reproducibility. Add a small end-to-end smoke test using synthetic data.
+- **No hidden dependencies**: If the expert wants to use additional libs, propose them
+  in a short rationale and request user approval before changing `requirements.txt`.
+
+# Deliverables & Acceptance Criteria
+
+- Minimal POC Streamlit app at `src/app/streamlit_app.py` that:
+  - Generates a grid from a bounding box and default cell size.
+  - Runs the smoke-path simulation and renders a `pydeck` GridLayer for a chosen hour.
+  - Exposes controls in the sidebar for bounding box, cell size, hours range, runs, and seed.
+  - Persists last results in `st.session_state['result_df']`.
+- Clear, small unit tests in `tests/` for grid math and run facade determinism.
+- A `README.md` fragment describing the smoke path, how to run, and how to reproduce a
+  deterministic run with a given seed.
+- Validation steps include running the app with the smoke path and verifying the map
+  updates within 2 seconds for small areas (e.g., bbox covering ~1e4 cells at 10 m²).
+
+# Validation Checklist (to include with PR)
+
+- **Context7 verification**: Confirm library versions in `requirements.txt` using Context7.
+- **Smoke map**: Map renders with synthetic data using the GridLayer.
+- **Determinism**: Same seed, same inputs → bitwise-equal aggregated output.
+- **Performance guardrail**: Warn when grid cell count > 1e6.
+- **No UI side-effects in `src/sim`**: Run unit tests to confirm no Streamlit imports.
+- **User-visible fallbacks**: Simulate `meteostat` failure and confirm user-facing notice.
+
+# UX rules (short)
+
+- Default controls should produce immediate results. Use progressive disclosure for
+  advanced options (e.g., 1 m² grid, advanced model params).
+- Use plain, actionable labels: **Run**, **Export CSV**, **Show raw table**.
+- Avoid modal dialogs for routine warnings; use inline banners or toast-like messages.
+
+# Non-obvious issues to watch for
+
+- Coordinate projection errors when computing metric cell sizes across latitudes.
+- Pydeck `GridLayer` cell sizing expects meters in Web Mercator — confirm with Context7.
+- Caching keys must include all inputs that affect output (seed, runs, grid params).
+- Large DataFrame passes between Streamlit and pydeck may copy data; prefer
+  lightweight views or `pyarrow` serialization when needed.
+
+# When uncertain
+
+- If library behavior or Streamlit API is uncertain, explicitly call Context7 and
+  include the query & result in the PR description.
+- When proposing UI additions or library changes, include a short rationale and
+  an explicit trade-off analysis (UX impact, performance cost, testability).
